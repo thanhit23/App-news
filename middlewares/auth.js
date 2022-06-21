@@ -19,7 +19,7 @@ const middlewaresAuthor = {
       return response.error(res, 'Unauthorized', 401)
     }
   },
-  verifyTokenAdminAuth: (req, res, next) => {
+  verifyAdmin: (req, res, next) => {
     if (req.user.user.admin) {
       next();
     } else {

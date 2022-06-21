@@ -7,7 +7,7 @@ const response = {
     }
     return res.status(statusCode).json(error)
   },
-  success: (res, data, message = 'success') => {
+  success: (res, data, message = 'Success') => {
     const success = {
       data,
       message,
@@ -15,8 +15,13 @@ const response = {
     }
     return res.status(200).json(success)
   },
-  server: (res, error) => {
-    return res.status(500).json(error)
+  serverError: (res, error) => {
+    const err = {
+      data: null,
+      message: error.message,
+      status: false,
+    }
+    return res.status(500).json(err)
   },
 }
 
