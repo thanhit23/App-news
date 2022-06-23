@@ -9,9 +9,6 @@ const checkpassword = async(req) => {
   const hashed = await bcrypt.hash(req.body.password, salt);
   return hashed;
 }
-const { env: { JWT_ACCESS_KEY, JWT_REFRESH_KEY } } = process;
-
-
 
 const authController = {
   registerUser: async(req, res) => {
@@ -19,6 +16,7 @@ const authController = {
       const { body: { username, email } } = req;
       const password = await checkpassword(req);
       const userExist = await User.findOne({ email });
+      const { env: {JWT_ACCESS_KEY} } = process;
 
       if (userExist) return response.error(res, 'Email already exists');
       
@@ -40,6 +38,7 @@ const authController = {
     }
   },
   generateAccessToken: (user) => {
+    const { env: {JWT_ACCESS_KEY} } = process;
     return jwt.sign(
       { user },
       JWT_ACCESS_KEY,
@@ -47,6 +46,7 @@ const authController = {
     )
   },
   generateRefreshToken: (user) => {
+    const { env: {JWT_REFRESH_KEY} } = process;
     return jwt.sign(
       { user },
       JWT_REFRESH_KEY,
@@ -57,13 +57,17 @@ const authController = {
     try {
       const { body: { password, email } } = req;
       const user = await User.findOne({ email });
-      if (user) return response.error(res, 'Wrong email!');
+      if (!user) {
+        return response.error(res, 'Wrong email!')
+      };
       const validPassword = await bcrypt.compare(
         password,
         user.password
       )
 
-      if (validPassword) return response.error(res, 'Wrong password!');
+      if (!validPassword) {
+        return response.error(res, 'Wrong password!')
+      };
       if (user && password) {
         const accessToken = authController.generateAccessToken(user);
         const refreshToken = authController.generateRefreshToken(user);
@@ -73,6 +77,7 @@ const authController = {
           path: '/',
           sameSite: 'strict',
         })
+        res.set("Access-Control-Allow-Origin", '*')
         return response.success(res, {accessToken, refreshToken}, 'Login successfully')
       }
     } catch (error) {

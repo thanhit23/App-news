@@ -24,7 +24,7 @@ const userchema = new mongoose.Schema({
     type: Boolean,
     default: false,
     minlength: 10,
-  }
+  },
 }, {timestamps: true});
 
 export default mongoose.model("User", userchema, 'users')
