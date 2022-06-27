@@ -5,8 +5,8 @@ import middlewaresAuthor from "../middlewares/auth.js";
 
 const router = express.Router();
 
-router.get('/', middlewaresAuthor.verifyToken, userController.getAllUsers);
-router.get('/me', middlewaresAuthor.verifyToken, userController.getMe);
-router.delete('/:id', middlewaresAuthor.verifyToken, middlewaresAuthor.verifyAdmin, userController.deleteUser);
+router.get('/', userController.getAllUsers);
+router.get('/me', userController.getMe);
+router.delete('/:id', middlewaresAuthor.verifyAdmin, userController.delete);
 
 export default router;
