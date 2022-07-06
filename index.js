@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongooses from 'mongoose';
 import bodyParser from 'body-parser';
+// import mongodb from 'mongodb'
 
 import authRoute from './routes/authen.js';
 import userRoute from './routes/user.js';
@@ -13,7 +14,25 @@ import middlewaresAuthor from './middlewares/auth.js';
 dotenv.config();
 
 const app = express();
-mongooses.connect(process.env.MONGO_URL, () => {
+// const MongoClient = mongooses.MongoClient
+// import MongoClient = require('mongodb').MongoClient;
+const url = 'mongodb://127.0.0.1:8000';
+
+// MongoClient.connect(url, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+//   }, (err, client) => {
+//     if (err) {
+//       return console.log(err);
+//     }
+
+//     const db = client.db('comment');
+
+//     console.log(`MongoDB Connected: ${url}`);
+//   });
+
+
+mongooses.connect(url, () => {
   console.log('Mongo runing...');
   console.log(`http://localhost:${process.env.PORT}`);
 })
