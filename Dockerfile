@@ -1,7 +1,11 @@
-FROM node:14
-COPY ./ /app
+FROM node:13-alpine
+
 WORKDIR /app
-RUN ls -al /app
+
+COPY . .
+
+RUN npm install
+
 EXPOSE 80
-RUN cd /app && npm install
+
 CMD npm start
