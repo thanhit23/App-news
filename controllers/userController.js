@@ -5,24 +5,24 @@ const userController = {
   getAllUsers: async(req, res) => {
     try {
       const user = await User.find();
-      response.success(res, user, 'Successfully')
+      return response.success(res, user, 'Successfully')
     } catch (error) {
-      response.serverError(res, error);
+      return response.serverError(res, error);
     }
   },
-  deleteUser: async(req, res) => {
+  delete: async(req, res) => {
     try {
       const user = await User.findByIdAndDelete(req.params.id);
-      response.success(res)
+      return response.success(res, user)
     } catch (error) {
-      response.serverError(res, error);
+      return response.serverError(res, error);
     }
   },
   getMe: async(req, res) => {
     try {
-      response.success(res, req.user.user)
+      return response.success(res, req.user.user)
     } catch (error) {
-      response.serverError(res, error);
+      return response.serverError(res, error);
     }
   }
 }

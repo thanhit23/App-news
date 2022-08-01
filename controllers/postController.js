@@ -58,7 +58,8 @@ const postsController = {
         }
       }
     ])
-    response.success(res, joined);
+    
+    return response.success(res, joined);
   },
   detail: async(req, res) => {
     const post = await Posts.findById(req.params.id)

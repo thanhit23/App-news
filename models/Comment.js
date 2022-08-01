@@ -1,12 +1,15 @@
 import mongoose from 'mongoose';
 
 const commentchema = new mongoose.Schema({
-  postId: {
+  content: {
     type: String,
     require: true,
-    minlength: 5,
   },
-  content: {
+  parentId: {
+    type: String,
+    require: true,
+  },
+  postId: {
     type: String,
     require: true,
   },
