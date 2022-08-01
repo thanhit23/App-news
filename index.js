@@ -25,6 +25,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
+app.use('/health', (req, res) => res.send('API OK'));
 app.use('/v1/auth', authRoute);
 app.use('/v1/user', middlewaresAuthor.verifyToken, userRoute);
 app.use('/v1/post', middlewaresAuthor.verifyToken, postsRoute);
